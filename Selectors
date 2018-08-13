@@ -48,15 +48,49 @@ XPath轴：相对于当前节点的节点集。
 ancestor	        :       选取当前节点的所有先辈（父、祖父等）。
 ancestor-or-self    :       选取当前节点的所有先辈（父、祖父等）以及当前节点本身。
 attribute	        :       选取当前节点的所有属性。
-child	            :       选取当前节点的所有子元素。
+child               :       选取当前节点的所有子元素。
 descendant	        :       选取当前节点的所有后代元素（子、孙等）。
 descendant-or-self	:       选取当前节点的所有后代元素（子、孙等）以及当前节点本身。
 following	        :       选取文档中当前节点的结束标签之后的所有节点。
 namespace	        :       选取当前节点的所有命名空间节点。
-parent	            :       选取当前节点的父节点。
+parent              :       选取当前节点的父节点。
 preceding	        :       选取文档中当前节点的开始标签之前的所有节点。
 preceding-sibling	:       选取当前节点之前的所有同级节点。
-self	            :       选取当前节点。
+self                :       选取当前节点。
+
+
+
+位置路径表达式：
+位置路径可以是绝对的，可以是相对的。绝对路径起始于正斜杠(/),而相对路径不会。位置路径均包括一个或多个步，每个步均被斜杠分割。
+
+绝对位置路径：     /step/step/...
+
+相对位置路径：     step/step/...
+
+每个步均根据当前节点集之中的节点来进行计算。
+
+步（step)包括：
+    轴（axis,定义所选节点与当前节点之间的树关系）
+    节点测试（node-test，识别某个轴内部的节点）
+    零个或多个谓语（predicate，更深入地提炼所选的节点集）
+
+步的语法：   轴名称::节点测试[谓语]
+
+child::book         :       选取所有属于当前节点的子元素的 book 节点。
+attribute::lang     :       选取当前节点的 lang 属性。
+child::*            :       选取当前节点的所有子元素。
+attribute::*        :       选取当前节点的所有属性。
+child::text()       :       选取当前节点的所有文本子节点。
+child::node()       :       选取当前节点的所有子节点。
+descendant::book    :       选取当前节点的所有 book 后代。
+ancestor::book      :       选择当前节点的所有 book 先辈。
+ancestor-or-self::book  :   选取当前节点的所有 book 先辈以及当前节点（如果此节点是 book 节点）
+child::*/child::price   :   选取当前节点的所有 price 孙节点。
+
+
+
+XPath表达式可返回节点集、字符串、逻辑值以及数字。
+
 
 
 XPath表达式的例子以及对应含义：
@@ -68,3 +102,23 @@ XPath表达式的例子以及对应含义：
 
 //div[@class="mine"]:选择所有具有clas="mine"属性的div元素
 
+
+
+
+Selector四个基本的方法：
+
+xpath():传入XPath表达式，返回该表达式所对应的所有节点的selector list列表。
+
+css():传入css表达式，返回该表达式所对应的所有节点的selector list列表。
+
+extract(): 序列化该节点为Unicode字符串并返回list。
+
+re(): 根据传入的正则表达式对数据进行提取，返回Unicode字符串list列表。
+
+
+使用item
+Item对象是自定义的python字典。使用标准字典语法来获取到其每个字段的值。
+
+保存爬取到的数据
+使用Feed exports 存储。（scrapy crawl domz(名称) -o items.json）
+将采用JSON格式对爬取的数据进行序列化，生成items.json文件。
