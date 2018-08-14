@@ -1,0 +1,22 @@
+命令行工具（Command line tools）,对于子命令，我们称为“command”或者“Scrapy commands”
+
+创建项目：scrapy startproject myproject(会在myproject目录中创建一个Scrapy项目)
+
+控制项目：
+
+    创建一个新的spider： scrapy genspider mydomain mydomain.com
+
+可用的工具命令（tool commands）:
+
+获取关于每个命令的详细内容：  scrapy <command> -h
+
+查看所有可用命令：   scrapy -h
+
+全局命令：
+    startproject、settings、runspider、shell、fetch、view、version
+
+项目（project-only）命令：
+    crawl、check、list、edit、parse、genspider、deploy、bench
+
+自定义项目命令：
+    COMMANDS_MODULE : Default:''   用于查找添加自定义Scrapy命令的模块。例：COMMANDS_MODULE = 'mybot.commands'
